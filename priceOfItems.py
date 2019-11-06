@@ -1,32 +1,65 @@
 
 
 
+
 NUMBER_OF_SWEETS = 5
 POUND_MULTIPLY = 100
 
 price_of_sweets = []
+x = 0
 
-def parse_Prices(sweet_price):
+def parse_prices(price):
+    if price[0] == "£":
+        price = price.strip().lstrip("£")
+        price = int(price) * 100
+    else:
+        price = price.strip("p")
+    return int(price)
 
-    for i in sweet_price:
-        if sweet_price[i][-1].lower() == "p":
-            sweet_price = sweet_price[:-1]
-        elif sweet_price[i][0] == "£":
-            sweet_price = sweet_price[1:]
+def convert_to_currency(value):
 
-    print(sweet_price)
+    if value > 100:
+        value = value / 100
+        value = "£" + str(value)
+    else:
+        value = str(value) +"p"
 
-for x in range(0,NUMBER_OF_SWEETS):
+    return value
 
+
+while x < NUMBER_OF_SWEETS:
     sweet_price = input("Please enter the price of sweet " + str(x+1) +"?\n")
-    price_of_sweets.append(sweet_price)
+
+    if sweet_price.startswith("£") or sweet_price.endswith("p"):
+        price_of_sweets.append(parse_prices(sweet_price))
+        print(price_of_sweets)
+        x = x + 1
+        print(x)
+    else:
+        print("Please input a number followed by a currency symbol")
 
 
-parse_Prices(price_of_sweets)
+
+
+
+total_price = sum(price_of_sweets)
+
+
+
+print(f"The total price is {convert_to_currency(total_price)}")
+
+average_price = total_price / NUMBER_OF_SWEETS
+
+print(f"The average price is {convert_to_currency(average_price)}")
+
+highest_price = max(price_of_sweets)
+
+print(f"The highest sweet price is {convert_to_currency(highest_price)}")
+
+lowest_price = min(price_of_sweets)
+
+print(f"The lowest price is {convert_to_currency(lowest_price)}")
 
 
 
 
-
-
-print (price_of_sweets)
