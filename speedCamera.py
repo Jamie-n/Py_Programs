@@ -1,8 +1,14 @@
 
+___author___ = "Jamie Neighbours"
+___email___= "u1854720@unimail.hud.ac.uk"
+___version___="3"
+
+
 import re
 
 only_speed = []
 speed_list = []
+
 still_reading = True
 SPEED_LIMIT = 50
 KMH_FACTOR = 1.609
@@ -19,6 +25,17 @@ def convert_to_kmh(speed):
     kmh = kmh+"KPH"
     return kmh
 
+#Calculates the number of speed violations using the array passed to it directly from the speed camera
+def speed_violations(camera_speeds):
+    violations = 0
+    for x in speed_list:
+       only_speed.append(x[1:])
+
+    for i in range(len(only_speed)):
+        only_speed[i] = int(only_speed[i])
+        if only_speed[i] > SPEED_LIMIT:
+            violations = violations + 1
+    return violations
 
 
 #Takes any number of speed readings until the user types in "END"
@@ -35,20 +52,7 @@ while still_reading == True:
         print("Input invalid, try again!")
 
 
-def speed_violations(camera_speeds):
-
-    speed_violations = 0
-    for x in speed_list:
-       only_speed.append(x[1:])
-
-    for i in range(len(only_speed)):
-        only_speed[i] = int(only_speed[i])
-        if only_speed[i] > SPEED_LIMIT:
-            speed_violations = speed_violations + 1
-    return speed_violations
-
 # Stores vehicle types for processing, index in array, 0 = heavy, 1 = light, 2 = car, 3 = unknown
-
 for x in speed_list:
     if x[:1] == "H":
         vehicle_types[0] += 1
@@ -57,6 +61,7 @@ for x in speed_list:
     elif x[:1] == "C":
         vehicle_types[2] += 1
 
+speed_violations(speed_list)
 
 print(f"Number of vehicles: {len(speed_list)}")
 print(f"Number of heavy goods: {vehicle_types[0]}({convert_to_percentage(vehicle_types[0],len(speed_list))})")
@@ -70,4 +75,5 @@ print(f"The lowest speed seen: {min(only_speed)}MPH ({convert_to_kmh(min(only_sp
 average_speed = (sum(only_speed)/(len(only_speed)))
 print(f"The average speed seen: {round(average_speed, 1)}MPH ({convert_to_kmh(average_speed)})\n")
 
-print(f"Speed limit violations: {speed_violations}({convert_to_percentage(speed_violations,len(only_speed))})")
+print(f"Speed limit violations: {speed_violations(speed_list)}({convert_to_percentage(speed_violations(speed_list)),len(only_speed)})")
+
