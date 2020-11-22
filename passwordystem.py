@@ -5,7 +5,7 @@
 passes_match = False
 PASS_UPPER_BOUND = 12
 PASS_LOWER_BOUND = 6
-BANNED_WORDS = ["huddersfield", "justinbeiber","cheese","canalside"]
+BANNED_WORDS = ["huddersfield","cheese"]
 
 
 
